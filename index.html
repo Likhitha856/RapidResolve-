@@ -11,24 +11,29 @@
             margin: 0;
             padding: 0;
             display: flex;
-            justify-content: center;
-            align-items: center;
             flex-direction: column;
+            align-items: center;
             height: 100vh;
+        }
+        .app-title {
+            font-size: 32px;
+            color: #333;
+            margin-top: 20px;
+            font-weight: bold;
         }
         .menu {
             display: flex;
             justify-content: space-around;
             width: 80%;
-            margin-top: 20px;
+            margin-top: 40px;
         }
         .menu-card {
             background-color: #fff;
             padding: 20px;
-            border-radius: 10px;
+            border-radius: 15px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             text-align: center;
-            width: 200px;
+            width: 220px;
             transition: transform 0.3s;
             cursor: pointer;
         }
@@ -36,19 +41,30 @@
             transform: translateY(-5px);
         }
         .menu-card img {
-            width: 50px;
-            height: 50px;
+            width: 60px;
+            height: 60px;
             margin-bottom: 15px;
         }
         .menu-card h3 {
-            font-size: 18px;
+            font-size: 20px;
             margin-bottom: 10px;
             color: #333;
         }
-        .app-title {
-            font-size: 28px;
-            color: #333;
-            margin-top: 50px;
+        .menu-card p {
+            font-size: 14px;
+            color: #666;
+        }
+        .btn {
+            background-color: #1a73e8;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .btn:hover {
+            background-color: #1558b0;
         }
         #upload-section {
             display: none;
@@ -58,9 +74,11 @@
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            flex-direction: column;
+            align-items: center;
         }
         #upload-section h2 {
-            font-size: 22px;
+            font-size: 24px;
             margin-bottom: 20px;
             color: #333;
         }
@@ -70,10 +88,14 @@
         }
         #uploadedFiles {
             margin-top: 20px;
+            width: 100%;
         }
         .file-item {
             padding: 10px;
             border-bottom: 1px solid #ddd;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
         .file-item:last-child {
             border-bottom: none;
@@ -82,58 +104,63 @@
             margin-top: 20px;
             display: flex;
             justify-content: space-between;
+            width: 100%;
         }
         #searchInput {
             padding: 10px;
-            width: 60%;
+            width: 70%;
             border: 1px solid #ddd;
             border-radius: 5px;
         }
         #searchButton {
             padding: 10px;
-            background-color: #333;
+            background-color: #1a73e8;
             color: #fff;
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        #searchButton:hover {
+            background-color: #1558b0;
         }
     </style>
 </head>
 <body>
 
+    <div class="app-title">
+        RapidResolve Investigation Made Easy
+    </div>
+
     <div class="menu">
         <div class="menu-card" id="uploadCard">
             <img src="upload_icon.png" alt="Upload and Explore">
             <h3>Upload and Explore RAW</h3>
-            <p>(Can upload and explore raw images)</p>
+            <p>Upload and explore raw images</p>
         </div>
         <div class="menu-card">
             <img src="scan_icon.png" alt="Automated Scanning">
             <h3>Automated Scanning</h3>
-            <p>(All type of automated scanning and analysis)</p>
+            <p>Automated scanning and analysis</p>
         </div>
         <div class="menu-card">
             <img src="insights_icon.png" alt="Insights">
             <h3>Insights</h3>
-            <p>(Generates insights based on uploaded raw)</p>
+            <p>Generate insights based on uploaded raw</p>
         </div>
     </div>
 
     <div id="upload-section">
         <h2>Upload and Explore RAW Images</h2>
         <input type="file" id="fileInput" multiple>
-        <button id="uploadButton">Upload</button>
+        <button class="btn" id="uploadButton">Upload</button>
 
         <div id="search-bar">
             <input type="text" id="searchInput" placeholder="Search by date or file name...">
-            <button id="searchButton">Search</button>
+            <button class="btn" id="searchButton">Search</button>
         </div>
 
         <div id="uploadedFiles"></div>
-    </div>
-
-    <div class="app-title">
-        RapidResolve Investigation Made Easy
     </div>
 
     <script>
@@ -149,7 +176,7 @@
 
         // Display the upload section when the card is clicked
         uploadCard.addEventListener('click', () => {
-            uploadSection.style.display = 'block';
+            uploadSection.style.display = 'flex';
         });
 
         // Handle file uploads
