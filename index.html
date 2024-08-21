@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RapidResolve - Investigation Made Easy</title>
+    <title>Upload RAW Images - RapidResolve</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -21,54 +21,8 @@
             margin-top: 20px;
             font-weight: bold;
         }
-        .menu {
-            display: flex;
-            justify-content: space-around;
-            width: 80%;
-            margin-top: 40px;
-        }
-        .menu-card {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            width: 220px;
-            transition: transform 0.3s;
-            cursor: pointer;
-        }
-        .menu-card:hover {
-            transform: translateY(-5px);
-        }
-        .menu-card img {
-            width: 60px;
-            height: 60px;
-            margin-bottom: 15px;
-        }
-        .menu-card h3 {
-            font-size: 20px;
-            margin-bottom: 10px;
-            color: #333;
-        }
-        .menu-card p {
-            font-size: 14px;
-            color: #666;
-        }
-        .btn {
-            background-color: #1a73e8;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        .btn:hover {
-            background-color: #1558b0;
-        }
         #upload-section {
-            display: none;
-            margin-top: 20px;
+            margin-top: 50px;
             width: 80%;
             background-color: #fff;
             padding: 20px;
@@ -86,6 +40,18 @@
             display: block;
             margin-bottom: 20px;
         }
+        .btn {
+            background-color: #1a73e8;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .btn:hover {
+            background-color: #1558b0;
+        }
         #uploadedFiles {
             margin-top: 20px;
             width: 100%;
@@ -100,84 +66,28 @@
         .file-item:last-child {
             border-bottom: none;
         }
-        #search-bar {
-            margin-top: 20px;
-            display: flex;
-            justify-content: space-between;
-            width: 100%;
-        }
-        #searchInput {
-            padding: 10px;
-            width: 70%;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-        #searchButton {
-            padding: 10px;
-            background-color: #1a73e8;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        #searchButton:hover {
-            background-color: #1558b0;
-        }
     </style>
 </head>
 <body>
 
     <div class="app-title">
-        RapidResolve Investigation Made Easy
-    </div>
-
-    <div class="menu">
-        <div class="menu-card" id="uploadCard">
-            <img src="upload_icon.png" alt="Upload and Explore">
-            <h3>Upload and Explore RAW</h3>
-            <p>Upload and explore raw images</p>
-        </div>
-        <div class="menu-card">
-            <img src="scan_icon.png" alt="Automated Scanning">
-            <h3>Automated Scanning</h3>
-            <p>Automated scanning and analysis</p>
-        </div>
-        <div class="menu-card">
-            <img src="insights_icon.png" alt="Insights">
-            <h3>Insights</h3>
-            <p>Generate insights based on uploaded raw</p>
-        </div>
+        RapidResolve - Upload RAW Images
     </div>
 
     <div id="upload-section">
-        <h2>Upload and Explore RAW Images</h2>
-        <input type="file" id="fileInput" multiple>
+        <h2>Select and Upload RAW Images</h2>
+        <input type="file" id="fileInput" multiple accept=".raw">
         <button class="btn" id="uploadButton">Upload</button>
-
-        <div id="search-bar">
-            <input type="text" id="searchInput" placeholder="Search by date or file name...">
-            <button class="btn" id="searchButton">Search</button>
-        </div>
 
         <div id="uploadedFiles"></div>
     </div>
 
     <script>
-        const uploadCard = document.getElementById('uploadCard');
-        const uploadSection = document.getElementById('upload-section');
         const fileInput = document.getElementById('fileInput');
         const uploadButton = document.getElementById('uploadButton');
         const uploadedFilesDiv = document.getElementById('uploadedFiles');
-        const searchInput = document.getElementById('searchInput');
-        const searchButton = document.getElementById('searchButton');
 
         let uploadedFiles = [];
-
-        // Display the upload section when the card is clicked
-        uploadCard.addEventListener('click', () => {
-            uploadSection.style.display = 'flex';
-        });
 
         // Handle file uploads
         uploadButton.addEventListener('click', () => {
@@ -198,27 +108,6 @@
         function displayUploadedFiles() {
             uploadedFilesDiv.innerHTML = '';
             uploadedFiles.forEach(file => {
-                const fileItem = document.createElement('div');
-                fileItem.className = 'file-item';
-                fileItem.textContent = `${file.name} - ${file.date.toLocaleDateString()}`;
-                uploadedFilesDiv.appendChild(fileItem);
-            });
-        }
-
-        // Handle search
-        searchButton.addEventListener('click', () => {
-            const query = searchInput.value.toLowerCase();
-            const filteredFiles = uploadedFiles.filter(file =>
-                file.name.toLowerCase().includes(query) ||
-                file.date.toLocaleDateString().toLowerCase().includes(query)
-            );
-            displaySearchedFiles(filteredFiles);
-        });
-
-        // Display searched files
-        function displaySearchedFiles(files) {
-            uploadedFilesDiv.innerHTML = '';
-            files.forEach(file => {
                 const fileItem = document.createElement('div');
                 fileItem.className = 'file-item';
                 fileItem.textContent = `${file.name} - ${file.date.toLocaleDateString()}`;
