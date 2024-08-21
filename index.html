@@ -1,121 +1,204 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rapid Resolve | Investigation Made Easy</title>
+    <title>RapidResolve - Investigation Made Easy</title>
     <style>
         body {
             font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
-            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
         }
-
-        .header {
-            background-color: #004aad;
-            color: white;
-            padding: 20px;
-            font-size: 28px;
-            font-weight: bold;
-        }
-
-        .menu-container {
+        .menu {
             display: flex;
             justify-content: space-around;
-            flex-wrap: wrap;
-            padding: 20px;
-            margin-top: 30px;
+            width: 80%;
+            margin-top: 20px;
         }
-
-        .card {
-            background-color: white;
-            width: 250px;
+        .menu-card {
+            background-color: #fff;
             padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            margin: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             text-align: center;
-            transition: transform 0.3s ease;
+            width: 200px;
+            transition: transform 0.3s;
             cursor: pointer;
         }
-
-        .card:hover {
-            transform: translateY(-10px);
+        .menu-card:hover {
+            transform: translateY(-5px);
         }
-
-        .card-icon {
-            font-size: 50px;
+        .menu-card img {
+            width: 50px;
+            height: 50px;
             margin-bottom: 15px;
-            color: #004aad;
         }
-
-        .card-title {
-            font-size: 20px;
+        .menu-card h3 {
+            font-size: 18px;
             margin-bottom: 10px;
-            font-weight: bold;
             color: #333;
         }
-
-        .card-description {
-            font-size: 16px;
-            color: #666;
+        .app-title {
+            font-size: 28px;
+            color: #333;
+            margin-top: 50px;
         }
-
-        @media (max-width: 768px) {
-            .menu-container {
-                flex-direction: column;
-            }
-
-            .card {
-                width: 80%;
-                margin: 15px auto;
-            }
+        #upload-section {
+            display: none;
+            margin-top: 20px;
+            width: 80%;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        #upload-section h2 {
+            font-size: 22px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        #fileInput {
+            display: block;
+            margin-bottom: 20px;
+        }
+        #uploadedFiles {
+            margin-top: 20px;
+        }
+        .file-item {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        .file-item:last-child {
+            border-bottom: none;
+        }
+        #search-bar {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+        #searchInput {
+            padding: 10px;
+            width: 60%;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        #searchButton {
+            padding: 10px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
         }
     </style>
 </head>
-
 <body>
-    <div class="header">Rapid Resolve | Investigation Made Easy</div>
 
-    <div class="menu-container">
-        <div class="card" onclick="uploadAndExplore()">
-            <div class="card-icon">📤</div>
-            <div class="card-title">Upload & Explore Raw</div>
-            <div class="card-description">Upload and explore raw images or files easily.</div>
+    <div class="menu">
+        <div class="menu-card" id="uploadCard">
+            <img src="upload_icon.png" alt="Upload and Explore">
+            <h3>Upload and Explore RAW</h3>
+            <p>(Can upload and explore raw images)</p>
         </div>
-
-        <div class="card" onclick="automatedScanning()">
-            <div class="card-icon">🔍</div>
-            <div class="card-title">Automated Scanning</div>
-            <div class="card-description">Automated scanning and analysis of uploaded files.</div>
+        <div class="menu-card">
+            <img src="scan_icon.png" alt="Automated Scanning">
+            <h3>Automated Scanning</h3>
+            <p>(All type of automated scanning and analysis)</p>
         </div>
-
-        <div class="card" onclick="generateInsights()">
-            <div class="card-icon">📊</div>
-            <div class="card-title">Generate Insights</div>
-            <div class="card-description">Get insights based on the uploaded raw data.</div>
+        <div class="menu-card">
+            <img src="insights_icon.png" alt="Insights">
+            <h3>Insights</h3>
+            <p>(Generates insights based on uploaded raw)</p>
         </div>
     </div>
 
+    <div id="upload-section">
+        <h2>Upload and Explore RAW Images</h2>
+        <input type="file" id="fileInput" multiple>
+        <button id="uploadButton">Upload</button>
+
+        <div id="search-bar">
+            <input type="text" id="searchInput" placeholder="Search by date or file name...">
+            <button id="searchButton">Search</button>
+        </div>
+
+        <div id="uploadedFiles"></div>
+    </div>
+
+    <div class="app-title">
+        RapidResolve Investigation Made Easy
+    </div>
+
     <script>
-        function uploadAndExplore() {
-            alert('Upload and Explore Raw feature will be implemented here.');
-            // Implement your logic here
+        const uploadCard = document.getElementById('uploadCard');
+        const uploadSection = document.getElementById('upload-section');
+        const fileInput = document.getElementById('fileInput');
+        const uploadButton = document.getElementById('uploadButton');
+        const uploadedFilesDiv = document.getElementById('uploadedFiles');
+        const searchInput = document.getElementById('searchInput');
+        const searchButton = document.getElementById('searchButton');
+
+        let uploadedFiles = [];
+
+        // Display the upload section when the card is clicked
+        uploadCard.addEventListener('click', () => {
+            uploadSection.style.display = 'block';
+        });
+
+        // Handle file uploads
+        uploadButton.addEventListener('click', () => {
+            const files = fileInput.files;
+            if (files.length > 0) {
+                for (let i = 0; i < files.length; i++) {
+                    const file = files[i];
+                    uploadedFiles.push({
+                        name: file.name,
+                        date: new Date()
+                    });
+                }
+                displayUploadedFiles();
+            }
+        });
+
+        // Display the uploaded files
+        function displayUploadedFiles() {
+            uploadedFilesDiv.innerHTML = '';
+            uploadedFiles.forEach(file => {
+                const fileItem = document.createElement('div');
+                fileItem.className = 'file-item';
+                fileItem.textContent = `${file.name} - ${file.date.toLocaleDateString()}`;
+                uploadedFilesDiv.appendChild(fileItem);
+            });
         }
 
-        function automatedScanning() {
-            alert('Automated Scanning feature will be implemented here.');
-            // Implement your logic here
-        }
+        // Handle search
+        searchButton.addEventListener('click', () => {
+            const query = searchInput.value.toLowerCase();
+            const filteredFiles = uploadedFiles.filter(file =>
+                file.name.toLowerCase().includes(query) ||
+                file.date.toLocaleDateString().toLowerCase().includes(query)
+            );
+            displaySearchedFiles(filteredFiles);
+        });
 
-        function generateInsights() {
-            alert('Generate Insights feature will be implemented here.');
-            // Implement your logic here
+        // Display searched files
+        function displaySearchedFiles(files) {
+            uploadedFilesDiv.innerHTML = '';
+            files.forEach(file => {
+                const fileItem = document.createElement('div');
+                fileItem.className = 'file-item';
+                fileItem.textContent = `${file.name} - ${file.date.toLocaleDateString()}`;
+                uploadedFilesDiv.appendChild(fileItem);
+            });
         }
     </script>
-</body>
 
+</body>
 </html>
